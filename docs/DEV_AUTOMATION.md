@@ -25,6 +25,8 @@ We use it because it can take well-scoped work in parallel — tests, fixtures, 
 
 ---
 
+> **Known limitation (4 Nov 2026):** a single account cannot trigger itself. The GitHub source skips comments authored by the agent login. The smoke test produced no Ticket. Use the one free machine account, or patch the source to allow an explicit `/agent` self-command (not recommended).
+
 ## 2. Why early
 
 Integrating it after the architecture is frozen would make it a bolt-on. Integrating it in week 1:

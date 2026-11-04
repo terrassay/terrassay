@@ -7,6 +7,8 @@
 | **Cost** | **$0** on GitHub; no Pro, Team, or Enterprise |
 | **Related** | [LEGAL_COMPLIANCE](LEGAL_COMPLIANCE.md) · [DEV_AUTOMATION](DEV_AUTOMATION.md) · [NAMING](NAMING.md) |
 
+> **Known limitation (4 Nov 2026):** the single-account setup authenticates and polls correctly, but Superagent ignores comments authored by its own account. A self-comment cannot trigger a Ticket. The standard fix is the one free machine account `terrassay-superagent` with its own classic PAT and repo access. See [SUPERAGENT_LOCAL](SUPERAGENT_LOCAL.md#51-smoke-test-result-4-november-2026).
+
 ---
 
 ## 1. The selected setup

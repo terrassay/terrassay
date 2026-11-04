@@ -147,6 +147,31 @@ If the self-mention does not arrive, the source already has `observeComments` on
 
 ---
 
+## 5.1 Smoke test result (4 November 2026)
+
+The local source is healthy:
+
+- GitHub source state: `ready`
+- Keychain token: valid
+- Notifications: readable
+- Repo: `terrassay/terrassay` (public, `main`)
+- Panel: `http://127.0.0.1:3092`
+
+But a self-authored comment does **not** create a Ticket. The source deliberately skips comments where the author is the agent account:
+
+```ts
+if (sameName(comment.user.login, login)) continue
+```
+
+That is loop prevention, not a configuration bug. **Single-account mode cannot trigger Superagent from the same account.** The intended setup uses a separate machine account for the agent.
+
+Until a machine account is added, the workable alternatives are:
+
+1. A separate machine account (`terrassay-superagent`) with its own classic PAT and repo access.
+2. A local source patch that allows a `/agent` self-command, which is not recommended because it weakens loop protection and leaves PR approval impossible.
+
+See [GITHUB_ORG_SETUP](GITHUB_ORG_SETUP.md#6-superagent-token-and-macos-keychain) for the token setup.
+
 ## 6. Same-account caveats
 
 - Commits and PRs are authored by `atpl-training`; there is no separate bot identity.
