@@ -16,7 +16,7 @@
 | Human owner | **`atpl-training`** | Owns the org, reviews, merges, handles billing. Agent commits are authored by this same account; there is no separate bot identity. |
 | Organisation | **`terrassay`** | Free GitHub organisation; the public project identity |
 | Repository | **`terrassay/terrassay`** | Public; branch-protected `main` |
-| Superagent identity | **`atpl-training`** | Same account, using a fine-grained PAT scoped only to `terrassay/terrassay`, stored in macOS Keychain |
+| Superagent identity | **`atpl-training`** | Same account, using a classic PAT (`public_repo` + `notifications`) stored in macOS Keychain |
 | Project path | **`github.com/terrassay/terrassay`** | |
 
 This is compliant with GitHub’s free-plan rule:
@@ -24,7 +24,7 @@ This is compliant with GitHub’s free-plan rule:
 - **one free Personal Account** — `atpl-training`;
 - **no second human account**;
 - **no paid plan** — the org is Free and the repo is public;
-- Superagent uses a fine-grained PAT scoped to one repo, stored in macOS Keychain.
+- Superagent uses a classic PAT with `public_repo` + `notifications`, stored in macOS Keychain. Fine-grained tokens cannot read notifications.
 
 > If GitHub prompts for a paid plan when creating the org, choose the **Free** plan. GitHub Team is only needed for advanced protections on **private** repositories; this repository is public.
 
@@ -56,7 +56,7 @@ Superagent (same account, atpl-training)
 2. Enable 2FA; store recovery codes in a vault.
 3. Use a project-specific email for notifications, not a personal inbox if possible.
 4. Do not rename the account to `terrassay`: GitHub usernames and org names share a namespace, so the org handle would be taken.
-5. Generate a project-specific SSH key and fine-grained PAT for this account; do not reuse personal keys.
+5. Generate a project-specific SSH key; for Superagent, use the classic PAT described in §6. Do not reuse personal keys.
 
 Git identity for human commits (if any):
 
@@ -122,27 +122,25 @@ git config --global user.email "<id>+atpl-training@users.noreply.github.com"
 
 ## 6. Superagent token and macOS Keychain
 
-No collaborator invite and no machine account are needed. Superagent runs as `atpl-training`, using a fine-grained PAT scoped to one repository. The token is stored in macOS Keychain, never in the repo or shell history.
+No collaborator invite and no machine account are needed. Superagent runs as `atpl-training`, using a classic PAT with `public_repo` + `notifications`. The token is stored in macOS Keychain, never in the repo or shell history.
 
 ### 6.1 Create the token
 
-As `atpl-training`:
+Superagent reads GitHub notifications to see mentions. **Fine-grained PATs cannot access the notifications API** and fail with `403 Resource not accessible by personal access token`. Use a **classic PAT** with only these scopes:
 
-**GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens**
+- `public_repo` — read/write public repositories
+- `notifications` — read notifications
 
-- Resource owner: `terrassay`
-- Repository access: **Only select repositories → `terrassay/terrassay`**
-- Permissions:
-  - Contents: read/write
-  - Issues: read/write
-  - Pull requests: read/write
-  - Actions: read
-  - Metadata: read
-  - Notifications: read, if available
-- **No** Administration, Secrets, Workflows, or org permissions.
-- Expiry: 90 days.
+**GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token (classic)**
 
-If the org requires approval for fine-grained PATs, approve the request in org settings.
+- Note: `terrassay-superagent`
+- Expiration: 90 days
+- Scopes: `public_repo`, `notifications`
+- Nothing else.
+
+This token can access **public** repositories only, not private ones. It is broader than a fine-grained token across public repos, but it is the narrowest token that lets Superagent read mentions. The account has no other public project repos, so the practical exposure is this repo.
+
+If you later switch to a machine account, use its own classic PAT with the same two scopes; do not share this token.
 
 ### 6.2 Store it in Keychain
 

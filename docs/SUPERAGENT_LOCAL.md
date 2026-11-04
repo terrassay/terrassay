@@ -63,6 +63,7 @@ The token is **not** in a file in the repo. It is in macOS Keychain:
 
 - Service: `terrassay-github-pat`
 - Account: `atpl-training`
+- Type: **classic PAT** with `public_repo` + `notifications` (fine-grained tokens cannot read notifications)
 
 Set or rotate it:
 

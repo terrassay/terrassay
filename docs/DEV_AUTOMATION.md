@@ -115,7 +115,7 @@ Trust boundaries:
 ### 5.2 Accounts
 
 1. Use the human account `atpl-training`. No machine account or collaborator invite is needed; the account already owns the repo.
-2. Create a fine-grained PAT scoped only to `terrassay/terrassay`, store it in macOS Keychain, and create the `gh-terrassay` wrapper ([GITHUB_ORG_SETUP](GITHUB_ORG_SETUP.md#6-superagent-token-and-macos-keychain)):
+2. Create a classic PAT with `public_repo` + `notifications` (fine-grained tokens cannot read notifications), store it in macOS Keychain, and create the `gh-terrassay` wrapper ([GITHUB_ORG_SETUP](GITHUB_ORG_SETUP.md#6-superagent-token-and-macos-keychain)):
    ```sh
    security add-generic-password -a "atpl-training" -s "terrassay-github-pat" -w
    mkdir -p ~/.local/bin
@@ -333,7 +333,7 @@ Deny everything else. If the agent needs a new host, it must be approved and doc
 
 1. Pause the executor in the panel.
 2. Revoke the bot's GitHub token/session.
-3. Revoke the fine-grained PAT and delete the Keychain item; remove the wrapper from the runner.
+3. Revoke the PAT and delete the Keychain item; remove the wrapper from the runner.
 4. Preserve logs and the state DB for review.
 5. Rotate any credential that may have been exposed.
 

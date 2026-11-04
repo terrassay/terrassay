@@ -12,10 +12,12 @@ if ! command -v security >/dev/null 2>&1; then
 fi
 
 if security find-generic-password -a "$ACCOUNT" -s "$SERVICE" >/dev/null 2>&1; then
-  echo "Updating existing Keychain item '$SERVICE'..."
+  echo "Use a classic PAT with scopes: public_repo, notifications."
+echo "Updating existing Keychain item '$SERVICE'..."
   security add-generic-password -U -a "$ACCOUNT" -s "$SERVICE" -w
 else
-  echo "Creating Keychain item '$SERVICE'..."
+  echo "Use a classic PAT with scopes: public_repo, notifications."
+echo "Creating Keychain item '$SERVICE'..."
   security add-generic-password -a "$ACCOUNT" -s "$SERVICE" -w
 fi
 
