@@ -1,5 +1,5 @@
 #!/bin/sh
-# Store the Terrassay fine-grained GitHub PAT in macOS Keychain.
+# Store the Terrassay GitHub PAT in macOS Keychain.
 # The token is entered at a hidden prompt; it is never written to disk or shell history.
 set -eu
 
