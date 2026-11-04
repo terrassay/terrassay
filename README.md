@@ -85,7 +85,8 @@ Full detail: [ARCHITECTURE.md](docs/ARCHITECTURE.md) · [DATA_MODEL.md](docs/DAT
 | [SECURITY.md](docs/SECURITY.md) | Threat model, token handling, tenancy path, AI and supply-chain controls |
 | [DEV_AUTOMATION.md](docs/DEV_AUTOMATION.md) | Superagent integration, isolation, review rules, metrics |
 | [SUPERAGENT_LOCAL.md](docs/SUPERAGENT_LOCAL.md) | This machine: local Superagent paths, Keychain, port, start/status |
-| [GITHUB_ORG_SETUP.md](docs/GITHUB_ORG_SETUP.md) | New GitHub organisation, dedicated accounts, branch protections |
+| [GITHUB_ORG_SETUP.md](docs/GITHUB_ORG_SETUP.md) | Free org, human account, repo settings, branch protections |
+| [MACHINE_ACCOUNT_SETUP.md](docs/MACHINE_ACCOUNT_SETUP.md) | Create the one free machine account and give it repo access |
 | [LEGAL_COMPLIANCE.md](docs/LEGAL_COMPLIANCE.md) | Licence matrix, clean-room rules, Revizto/GeoLibre/AI compliance, launch gate |
 | [LICENSING_BUSINESS.md](docs/LICENSING_BUSINESS.md) | Apache-2.0, community sustainability, trademarks |
 | [RISKS.md](docs/RISKS.md) | Risk register, triggers, kill criteria, decision gates |

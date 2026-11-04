@@ -170,7 +170,7 @@ Until a machine account is added, the workable alternatives are:
 1. A separate machine account (`terrassay-superagent`) with its own classic PAT and repo access.
 2. A local source patch that allows a `/agent` self-command, which is not recommended because it weakens loop protection and leaves PR approval impossible.
 
-See [GITHUB_ORG_SETUP](GITHUB_ORG_SETUP.md#6-superagent-token-and-macos-keychain) for the token setup.
+See [MACHINE_ACCOUNT_SETUP](MACHINE_ACCOUNT_SETUP.md) for the machine-account setup.
 
 ## 6. Same-account caveats
 
