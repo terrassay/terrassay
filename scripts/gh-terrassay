@@ -1,0 +1,31 @@
+#!/bin/sh
+# GitHub CLI wrapper for Terrassay.
+# Reads a repo-scoped PAT from macOS Keychain and injects it only into this process.
+set -eu
+
+SERVICE="terrassay-github-pat"
+ACCOUNT="atpl-training"
+
+if ! command -v security >/dev/null 2>&1; then
+  echo "error: macOS 'security' command not found" >&2
+  exit 1
+fi
+
+if ! command -v gh >/dev/null 2>&1; then
+  echo "error: GitHub CLI 'gh' not found" >&2
+  exit 1
+fi
+
+if ! TOKEN="$(security find-generic-password -w -a "$ACCOUNT" -s "$SERVICE" 2>/dev/null)"; then
+  echo "error: no Keychain item '$SERVICE' for account '$ACCOUNT'." >&2
+  echo "Run: scripts/setup-keychain.sh" >&2
+  exit 1
+fi
+
+if [ -z "$TOKEN" ]; then
+  echo "error: Keychain item '$SERVICE' is empty." >&2
+  exit 1
+fi
+
+export GH_TOKEN="$TOKEN"
+exec gh "$@"

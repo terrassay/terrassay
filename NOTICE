@@ -1,0 +1,67 @@
+Terrassay
+Copyright 2026 The Terrassay Authors
+
+This product includes software developed by the Terrassay project and third parties.
+The Apache-2.0 licence applies to original Terrassay code. Third-party components
+remain under their own licences; the list below is a starting inventory and is
+completed by the generated THIRD_PARTY_LICENSES file at release time.
+
+--------------------------------------------------------------------------------
+GeoLibre
+https://github.com/opengeos/GeoLibre
+Licence: MIT
+Used as the embedded map and analysis surface. Terrassay is an independent project
+and is not affiliated with or endorsed by GeoLibre.
+
+MapLibre GL JS
+https://maplibre.org/
+Licence: BSD-3-Clause
+
+deck.gl
+https://deck.gl/
+Licence: MIT
+
+CesiumJS
+https://cesium.com/platform/cesiumjs/
+Licence: Apache-2.0
+Cesium Ion is an optional commercial service and is not required by the core.
+
+PostGIS
+https://postgis.net/
+Licence: GPL-2.0-or-later
+Used as a separate database service. See LEGAL_COMPLIANCE.md for the review
+status of distribution obligations.
+
+GDAL
+https://gdal.org/
+Licence: MIT/X11
+
+PROJ
+https://proj.org/
+Licence: MIT
+
+PDAL
+https://pdal.io/
+Licence: BSD-3-Clause
+
+DuckDB
+https://duckdb.org/
+Licence: MIT
+
+dsh-superagent (development tool only, not distributed with Terrassay)
+https://github.com/deepseek-ai/dsh-superagent-prototype
+Licence: MIT
+Copyright (c) 2026 DeepSeek Harness Team
+
+--------------------------------------------------------------------------------
+Trademarks
+
+"Revizto" is a trademark of Revizto SA. Terrassay is an independent project and is
+not affiliated with, endorsed by, or sponsored by Revizto. The Revizto name is
+used only to describe an intended integration.
+
+"GeoLibre" and the GeoLibre logo are used only to credit the upstream project.
+"DeepSeek" is used only to describe a development tool. No third-party logo is
+used as Terrassay branding.
+
+See TRADEMARKS.md for the project's own trademark policy.
