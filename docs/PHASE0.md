@@ -12,7 +12,7 @@
 
 Phase 0 proves the foundation before the demo features are built:
 
-- Monorepo and CI.
+- Monorepo and a staged CI workflow (`docs/ci/github-actions.yml`).
 - Rust API with health and read-only project endpoints.
 - PostGIS schema and deterministic synthetic seed.
 - Mock Revizto connector behind a `BimConnector` trait.
@@ -62,15 +62,23 @@ The map is embedded as an iframe in Phase 0. The spike must prove:
 If a command is unavailable, document it and build a first-party plugin inside
 the map host. Do not fork GeoLibre for Phase 0.
 
-## 5. Known limitations
+## 5. CI note
+
+The GitHub Actions workflow is staged at `docs/ci/github-actions.yml` because the
+current classic PAT lacks the `workflow` scope needed to publish files under
+`.github/workflows/`. Add the `workflow` scope to the token, then copy the file
+to `.github/workflows/ci.yml` and commit it.
+
+## 6. Known limitations
 
 - The API is read-only and unauthenticated; this is a local demo only.
 - The worker is a heartbeat; the job queue arrives in Phase 1.
 - The map host is the official GeoLibre image; `latest` must be pinned before release.
+- GeoLibre loads, but the default basemap/globe styling is a Phase 1 task; no Cesium Ion or paid basemap key is configured.
 - The seed is synthetic and not a Revizto export.
 - No AI assistant yet; the panel is a stub.
 
-## 6. Next
+## 7. Next
 
 Phase 1 adds the map bridge, localization, mock sync, dataset upload, assistant
 tools, and 3D massing on top of this scaffold.
