@@ -1,0 +1,9 @@
+.git
+.gitignore
+node_modules
+.pnpm
+.pnpm-store
+.cache
+.docker
+apps/web/dist
+target

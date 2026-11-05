@@ -1,0 +1,72 @@
+name: terrassay
+
+services:
+  postgres:
+    image: postgis/postgis:17-3.4
+    environment:
+      POSTGRES_USER: terrassay
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-terrassay_dev}
+      POSTGRES_DB: terrassay
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ../../crates/db/migrations/0001_init.sql:/docker-entrypoint-initdb.d/001_init.sql:ro
+      - ../../fixtures/demo/seed.sql:/docker-entrypoint-initdb.d/002_seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U terrassay -d terrassay"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    ports:
+      - "5432:5432"
+
+  api:
+    build:
+      context: ../..
+      dockerfile: services/api/Dockerfile
+    environment:
+      DATABASE_URL: postgres://terrassay:${POSTGRES_PASSWORD:-terrassay_dev}@postgres:5432/terrassay
+      RUST_LOG: terrassay_api=info,tower_http=info
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "${API_PORT:-8082}:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8080/healthz || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  worker:
+    build:
+      context: ../..
+      dockerfile: services/worker/Dockerfile
+    environment:
+      RUST_LOG: terrassay_worker=info
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  map:
+    image: ghcr.io/opengeos/geolibre:latest
+    environment:
+      GEOLIBRE_EMBED_ORIGINS: "http://localhost:8080,http://localhost:8090,http://localhost:5173"
+    ports:
+      - "8081:80"
+
+  web:
+    build:
+      context: ../..
+      dockerfile: apps/web/Dockerfile
+      args:
+        VITE_MAP_URL: http://localhost:8081/
+    ports:
+      - "${WEB_PORT:-8080}:80"
+    depends_on:
+      api:
+        condition: service_healthy
+      map:
+        condition: service_started
+
+volumes:
+  pgdata:

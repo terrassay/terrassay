@@ -1,10 +1,15 @@
 # Local state (never commit)
+.cache/
+.pnpm/
+.pnpm-store/
 .env
 .env.*
 *.token
 *.pem
 
 # OS / editors
+.docker/
+.chrome/
 .DS_Store
 .idea/
 .vscode/

@@ -4,10 +4,10 @@
 
 Terrassay connects BIM coordination data to geographic context. It is a self-hostable workspace where a construction team can locate a project on a map, overlay site and environmental data, ask spatial questions, and get answers grounded in the project record.
 
-> **Status: planning + bootstrap — v0.1, November 2026.**
-> Built by a solo maintainer working with the DeepSeek Harness assistant. Open source from the start, with synthetic data and no paid tier.
-> No application code exists yet; this repository contains the build plan, governance, and architecture decision records.
-> The first milestone is a local, reproducible demo. There is no fixed deadline.
+> **Status: Phase 0 scaffold — v0.1, November 2026.**
+> Built by a solo maintainer working with the DeepSeek Harness assistant. Open source, synthetic data only, no paid tier.
+> The Rust API, PostGIS schema, mock connector, React shell, and Compose stack are in place. The demo features land in Phase 1.
+> There is no fixed deadline.
 
 ---
 
@@ -48,6 +48,36 @@ A ten-minute, fully synthetic demonstration:
 
 No Revizto credentials, customer data, or paid map keys are required. The demo is deterministic and resettable. See [BUILD_PLAN.md](docs/BUILD_PLAN.md#5-the-demo).
 
+## Phase 0 quickstart
+
+```sh
+cp .env.example .env
+docker compose -f infrastructure/compose/compose.yaml up --build
+```
+
+Open <http://localhost:8080>. The first boot creates the PostGIS schema and seeds the synthetic Hafenquartier Zürich project: 240 issues, 3 clashes, 12 sheets.
+
+If port 8080 is already in use, run `WEB_PORT=8090 docker compose -f infrastructure/compose/compose.yaml up --build` and open <http://localhost:8090>. The API is exposed directly on `8082`; the map host is on `8081`.
+
+API endpoints:
+
+```text
+GET /healthz
+GET /readyz
+GET /api/v1/projects
+GET /api/v1/projects/:id/summary
+GET /api/v1/projects/:id/issues?limit=12
+```
+
+For frontend-only development:
+
+```sh
+pnpm install
+pnpm dev:web
+```
+
+The Vite dev server proxies `/api` to `localhost:8080` and `/map` to `localhost:8081`.
+
 ## Architecture at a glance
 
 ```mermaid
@@ -75,6 +105,7 @@ Full detail: [ARCHITECTURE.md](docs/ARCHITECTURE.md) · [DATA_MODEL.md](docs/DAT
 | Document | What it covers |
 |---|---|
 | [BUILD_PLAN.md](docs/BUILD_PLAN.md) | The master plan: product, demo, architecture, delivery, estimates, risks |
+| [PHASE0.md](docs/PHASE0.md) | Phase 0 scope, acceptance criteria, and GeoLibre spike |
 | [ROADMAP.md](docs/ROADMAP.md) | Phases, milestones, work breakdown, staffing scenarios |
 | [ARCHITECTURE.md](docs/ARCHITECTURE.md) | System design, components, data flows, deployment topologies |
 | [DATA_MODEL.md](docs/DATA_MODEL.md) | Entities, PostGIS schema, CRS policy, provenance |

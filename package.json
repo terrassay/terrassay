@@ -1,0 +1,11 @@
+{
+  "name": "terrassay",
+  "private": true,
+  "packageManager": "pnpm@12.16.1",
+  "scripts": {
+    "dev:web": "pnpm --filter @terrassay/web dev",
+    "build:web": "pnpm --filter @terrassay/web build",
+    "lint:web": "pnpm --filter @terrassay/web lint",
+    "typecheck:web": "pnpm --filter @terrassay/web typecheck"
+  }
+}
