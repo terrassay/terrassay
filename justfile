@@ -10,7 +10,7 @@ dev-web:
     pnpm dev:web
 
 dev-api:
-    cargo run -p terrassay-api
+    API_BIND=127.0.0.1:8082 cargo run -p terrassay-api
 
 test:
     cargo test --workspace

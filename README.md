@@ -76,7 +76,7 @@ pnpm install
 pnpm dev:web
 ```
 
-The Vite dev server proxies `/api` to `localhost:8080` and `/map` to `localhost:8081`.
+The Vite dev server proxies `/api` to `localhost:8082` and `/map` to `localhost:8081`. For a local API, use `just dev-api` or `API_BIND=127.0.0.1:8082 cargo run -p terrassay-api`.
 
 ## Architecture at a glance
 
