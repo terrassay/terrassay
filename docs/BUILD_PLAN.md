@@ -46,7 +46,7 @@ No Pro, Team, or Enterprise plan is required for a public repo in a free organis
 | Real Revizto connector | After API access; unscheduled |
 | Self-hosted beta (v0.1) | Milestone-driven; no fixed date |
 | Phase 1 effort | ~100 person-days |
-| Total effort to beta | ~274 person-days (estimate, not a commitment) |
+| Total effort to beta | ~273 person-days (estimate, not a commitment) |
 | Team | 1 maintainer + the assistant; community contributors |
 | Cash to demo | <€50 first year (optional domain), excluding model usage |
 | Infrastructure | Local Docker; free tiers; optional €5–20/month |
@@ -471,11 +471,11 @@ There is no fixed beta date. Phase 2 depends on API access; Phase 3 depends on c
 
 | Phase | Person-days | Calendar (solo + AI) |
 |---|---:|---|
-| 0 — Bootstrap | 12 | 2 weeks |
+| 0 — Bootstrap | 11 | 2 weeks |
 | 1 — Demo MVP | 100 | 12–16 weeks full-time |
 | 2 — Real connector + pilot | 80 | 8–10 weeks full-time after access |
 | 3 — Self-hosted beta | 82 | Ongoing; community-dependent |
-| **Total** | **274** | **Not a deadline** |
+| **Total** | **273** | **Not a deadline** |
 
 Phase 1 breakdown:
 

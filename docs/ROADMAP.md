@@ -25,11 +25,11 @@
 
 | Phase | Timing | Effort | Outcome | Gate |
 |---|---|---:|---|---|
-| **0 — Bootstrap & validation** | Weeks 1–2 | 12 PD | Account/org, licence/naming baseline, GeoLibre spike, fixture, mock contract | Spike go/no-go; fixture ready; public pre-flight v0 |
+| **0 — Bootstrap & validation** | Weeks 1–2 | 11 PD | Account/org, licence/naming baseline, GeoLibre spike, fixture, mock contract | Spike go/no-go; fixture ready; public pre-flight v0 |
 | **1 — Demo MVP** | Weeks 3–18 (12–16 working weeks) | 100 PD | Six capabilities including 3D massing, synthetic demo, one-command local install | 3 clean rehearsals; scorecard |
 | **2 — Real connector & pilot** | After Revizto access | 80 PD | Revizto OAuth/sync, OIDC, IFC/3D Tiles, one partner | Partner project synced; external review |
 | **3 — Self-hosted beta** | Ongoing | 82 PD | Connector SDK, collaboration, SSO, docs, release 0.1 | Partners; upgrade/backup test; self-audit |
-| **Total** | **Not a deadline** | **274 PD** | Open-source beta | Quality, not calendar |
+| **Total** | **Not a deadline** | **273 PD** | Open-source beta | Quality, not calendar |
 
 Capacity assumption: one maintainer, full-time or part-time, with the assistant for scoped work. Phase 1's 100 PD is roughly 12–16 weeks full-time after AI leverage; part-time stretches to 5–8 months. Contingency is held at the milestone level.
 
@@ -63,7 +63,7 @@ Dates assume full-time work. If part-time, multiply by roughly 2–2.5.
 | GeoLibre spike | Host map, iframe, addLayer, setFilter, highlight, selection, signed COG | 3 | Maintainer |
 | Revizto discovery | Access checklist, API questions, canonical schema v1 | 2 | Maintainer |
 | Demo fixture | Narrative, 240 synthetic issues, 3 datasets, control points, massing footprints | 2 | Maintainer |
-| **Total** | | **12** | |
+| **Total** | | **11** | |
 
 **Decision gate (end week 2):**
 
