@@ -4,9 +4,9 @@
 
 Terrassay connects BIM coordination data to geographic context. It is a self-hostable workspace where a construction team can locate a project on a map, overlay site and environmental data, ask spatial questions, and get answers grounded in the project record.
 
-> **Status: Phase 0 scaffold — v0.1, November 2026.**
+> **Status: Phase 1 vertical slice — v0.1, November 2026.**
 > Built by a solo maintainer working with the DeepSeek Harness assistant. Open source, synthetic data only, no paid tier.
-> The Rust API, PostGIS schema, mock connector, React shell, and Compose stack are in place. The demo features land in Phase 1.
+> The map bridge, localization, mock sync, layers, and a deterministic grounded assistant are in place.
 > There is no fixed deadline.
 
 ---
@@ -106,6 +106,7 @@ Full detail: [ARCHITECTURE.md](docs/ARCHITECTURE.md) · [DATA_MODEL.md](docs/DAT
 |---|---|
 | [BUILD_PLAN.md](docs/BUILD_PLAN.md) | The master plan: product, demo, architecture, delivery, estimates, risks |
 | [PHASE0.md](docs/PHASE0.md) | Phase 0 scope, acceptance criteria, and GeoLibre spike |
+| [PHASE1.md](docs/PHASE1.md) | Map bridge, localization, mock sync, layers, assistant |
 | [ROADMAP.md](docs/ROADMAP.md) | Phases, milestones, work breakdown, staffing scenarios |
 | [ARCHITECTURE.md](docs/ARCHITECTURE.md) | System design, components, data flows, deployment topologies |
 | [DATA_MODEL.md](docs/DATA_MODEL.md) | Entities, PostGIS schema, CRS policy, provenance |

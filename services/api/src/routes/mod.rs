@@ -1,5 +1,8 @@
+pub mod assistant;
 pub mod health;
+pub mod project_data;
 pub mod projects;
+pub mod sync;
 
 use axum::{
     http::StatusCode,

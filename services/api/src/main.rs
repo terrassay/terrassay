@@ -33,6 +33,9 @@ async fn main() -> anyhow::Result<()> {
         .route("/healthz", get(routes::health::healthz))
         .route("/readyz", get(routes::health::readyz))
         .nest("/api/v1", routes::projects::router())
+        .nest("/api/v1", routes::project_data::router())
+        .nest("/api/v1", routes::assistant::router())
+        .nest("/api/v1", routes::sync::router())
         .layer(CorsLayer::permissive())
         .layer(TraceLayer::new_for_http())
         .with_state(AppState { pool });

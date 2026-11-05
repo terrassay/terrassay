@@ -15,6 +15,7 @@
 .vscode/
 
 # Build outputs
+.phase1-bin/
 node_modules/
 target/
 dist/

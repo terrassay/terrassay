@@ -10,7 +10,8 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ../../crates/db/migrations/0001_init.sql:/docker-entrypoint-initdb.d/001_init.sql:ro
-      - ../../fixtures/demo/seed.sql:/docker-entrypoint-initdb.d/002_seed.sql:ro
+      - ../../crates/db/migrations/0002_localization_features.sql:/docker-entrypoint-initdb.d/002_localization_features.sql:ro
+      - ../../fixtures/demo/seed.sql:/docker-entrypoint-initdb.d/003_seed.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U terrassay -d terrassay"]
       interval: 3s
@@ -42,6 +43,7 @@ services:
       context: ../..
       dockerfile: services/worker/Dockerfile
     environment:
+      DATABASE_URL: postgres://terrassay:${POSTGRES_PASSWORD:-terrassay_dev}@postgres:5432/terrassay
       RUST_LOG: terrassay_worker=info
     depends_on:
       postgres:

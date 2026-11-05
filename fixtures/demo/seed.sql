@@ -116,3 +116,88 @@ VALUES (
   '018f0000-0000-7000-8000-000000000001',
   '{"source":"fixtures/demo","synthetic":true}'::jsonb
 );
+
+INSERT INTO project_localizations (
+  project_id, method, source_crs, target_crs, transform, accuracy_m, confidence, verified, notes
+)
+VALUES (
+  '018f0000-0000-7000-8000-000000000001',
+  'control_points',
+  'LOCAL:PROJECT',
+  'EPSG:2056',
+  '{"type":"helmert2d","tx":2683120.41,"ty":1247310.87,"rotationDeg":12.4,"scale":1.000021,"rms":0.18}'::jsonb,
+  0.18,
+  'verified',
+  true,
+  'Synthetic control points; demo only'
+)
+ON CONFLICT (project_id) DO NOTHING;
+
+INSERT INTO project_features (project_id, layer_key, properties, geometry)
+SELECT
+  '018f0000-0000-7000-8000-000000000001',
+  'site',
+  '{"name":"Hafenquartier site boundary","kind":"site"}'::jsonb,
+  ST_GeomFromText('POLYGON((8.5144 47.3823, 8.5198 47.3823, 8.5198 47.3869, 8.5144 47.3869, 8.5144 47.3823))', 4326)
+WHERE NOT EXISTS (
+  SELECT 1 FROM project_features WHERE project_id = '018f0000-0000-7000-8000-000000000001' AND layer_key = 'site'
+);
+
+INSERT INTO project_features (project_id, layer_key, properties, geometry)
+SELECT
+  '018f0000-0000-7000-8000-000000000001',
+  'flood',
+  '{"name":"Flood hazard zone","kind":"flood","source":"synthetic"}'::jsonb,
+  ST_GeomFromText('POLYGON((8.5144 47.3823, 8.5182 47.3823, 8.5182 47.3854, 8.5144 47.3854, 8.5144 47.3823))', 4326)
+WHERE NOT EXISTS (
+  SELECT 1 FROM project_features WHERE project_id = '018f0000-0000-7000-8000-000000000001' AND layer_key = 'flood'
+);
+
+INSERT INTO project_features (project_id, layer_key, properties, geometry)
+SELECT
+  '018f0000-0000-7000-8000-000000000001',
+  'buildings',
+  jsonb_build_object('name', name, 'kind', 'building', 'height', height, 'floors', floors),
+  ST_GeomFromText(wkt, 4326)
+FROM (
+  VALUES
+    ('Building A - offices', 24, 6, 'POLYGON((8.5150 47.3830, 8.5159 47.3830, 8.5159 47.3838, 8.5150 47.3838, 8.5150 47.3830))'),
+    ('Building B - offices', 21, 5, 'POLYGON((8.5162 47.3830, 8.5170 47.3830, 8.5170 47.3839, 8.5162 47.3839, 8.5162 47.3830))'),
+    ('Building C - residential', 27, 8, 'POLYGON((8.5150 47.3841, 8.5160 47.3841, 8.5160 47.3849, 8.5150 47.3849, 8.5150 47.3841))'),
+    ('Building D - hotel', 30, 9, 'POLYGON((8.5163 47.3841, 8.5173 47.3841, 8.5173 47.3850, 8.5163 47.3850, 8.5163 47.3841))'),
+    ('Building E - retail podium', 12, 3, 'POLYGON((8.5176 47.3832, 8.5190 47.3832, 8.5190 47.3840, 8.5176 47.3840, 8.5176 47.3832))'),
+    ('Building F - energy centre', 9, 2, 'POLYGON((8.5177 47.3843, 8.5187 47.3843, 8.5187 47.3849, 8.5177 47.3849, 8.5177 47.3843))')
+) AS buildings(name, height, floors, wkt)
+WHERE NOT EXISTS (
+  SELECT 1 FROM project_features WHERE project_id = '018f0000-0000-7000-8000-000000000001' AND layer_key = 'buildings'
+);
+
+INSERT INTO layers (project_id, name, type, visible, z_index, layer_key, source_config)
+SELECT
+  '018f0000-0000-7000-8000-000000000001',
+  'Site boundary',
+  'geojson',
+  true,
+  5,
+  'site',
+  '{"source":"project_features"}'::jsonb
+WHERE NOT EXISTS (
+  SELECT 1 FROM layers WHERE project_id = '018f0000-0000-7000-8000-000000000001' AND layer_key = 'site'
+);
+
+INSERT INTO layers (project_id, name, type, visible, z_index, layer_key, source_config)
+SELECT
+  '018f0000-0000-7000-8000-000000000001',
+  'Buildings',
+  'geojson',
+  true,
+  15,
+  'buildings',
+  '{"source":"project_features","extrusion":true}'::jsonb
+WHERE NOT EXISTS (
+  SELECT 1 FROM layers WHERE project_id = '018f0000-0000-7000-8000-000000000001' AND layer_key = 'buildings'
+);
+
+UPDATE layers SET layer_key = 'site' WHERE project_id = '018f0000-0000-7000-8000-000000000001' AND name = 'Site boundary';
+UPDATE layers SET layer_key = 'flood' WHERE project_id = '018f0000-0000-7000-8000-000000000001' AND name = 'Flood hazard zone';
+UPDATE layers SET layer_key = 'issues' WHERE project_id = '018f0000-0000-7000-8000-000000000001' AND name = 'Issues';

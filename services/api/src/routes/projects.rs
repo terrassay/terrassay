@@ -41,6 +41,8 @@ struct IssueRow {
     priority: String,
     discipline: Option<String>,
     assignee_name: Option<String>,
+    lon: Option<f64>,
+    lat: Option<f64>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -93,7 +95,8 @@ async fn list_issues(
 ) -> Result<Json<Vec<IssueRow>>, ApiError> {
     let limit = query.limit.unwrap_or(25).clamp(1, 100);
     let issues = sqlx::query_as::<_, IssueRow>(
-        "SELECT id, external_id, title, status, priority, discipline, assignee_name
+        "SELECT id, external_id, title, status, priority, discipline, assignee_name,
+                ST_X(location) AS lon, ST_Y(location) AS lat
          FROM issues
          WHERE project_id = $1
          ORDER BY
