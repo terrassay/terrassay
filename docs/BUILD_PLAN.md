@@ -18,13 +18,13 @@ Terrassay is an open-source, self-hostable **site-intelligence workspace for con
 
 The product is deliberately **not** a general GIS and **not** a BIM viewer. The differentiated asset is the bridge between the two: a canonical project model, an explicit and auditable georeferencing workflow, construction-specific spatial analyses, and a connector architecture where Revizto is the first adapter rather than the product identity.
 
-The first milestone is a **local-first open-source demo**, built by a **solo maintainer working with AI agents** (this assistant and `dsh-superagent`). It runs on **synthetic data** and a **mock Revizto connector**, so it needs no vendor credentials and creates no data-processing obligations. The demo proves six things: connect a BIM source, sync project metadata, place it on a map, overlay external geodata, show 3D site massing, and answer a grounded spatial question.
+The first milestone is a **local-first open-source demo**, built by a **solo maintainer working with the DeepSeek Harness assistant**. It runs on **synthetic data** and a **mock Revizto connector**, so it needs no vendor credentials and creates no data-processing obligations. The demo proves six things: connect a BIM source, sync project metadata, place it on a map, overlay external geodata, show 3D site massing, and answer a grounded spatial question.
 
 The map and analysis surface is **GeoLibre**, a mature MIT-licensed React/MapLibre/Cesium GIS workspace, reused through its typed iframe embed API and official container. Terrassay builds the BIM shell around it rather than rebuilding a generic GIS. This is the single biggest schedule and risk decision in the plan.
 
 The backend is a **Rust modular monolith** (Axum + Tokio + SQLx) with **PostgreSQL/PostGIS** as the system of record, S3-compatible object storage, and a Postgres-backed job queue. Python is used where its scientific ecosystem is decisive (GDAL/PDAL/rasterio/PyTorch), not as the application brain. The AI orchestrator lives in Rust so permissions, audit, and tool execution stay in one place.
 
-The plan is sized for **one maintainer plus AI agents**, not a funded team. Calendar estimates assume full-time focus; part-time work stretches them. The project is ongoing and community contributions are welcome, so milestones are more useful than fixed dates.
+The plan is sized for **one maintainer working with the assistant**, not a funded team. Calendar estimates assume full-time focus; part-time work stretches them. The project is ongoing and community contributions are welcome, so milestones are more useful than fixed dates.
 
 ### GitHub identity: selected free setup
 
@@ -33,9 +33,8 @@ The project uses a **free GitHub organisation** and a **single human account**:
 - **Human account:** `atpl-training` — owns the org, reviews, merges, handles billing. Agent commits are authored by this same account; there is no separate bot identity.
 - **Organisation:** `terrassay` — free plan; public project identity.
 - **Repository:** `terrassay/terrassay` — public; `main` protected.
-- **Superagent identity:** `atpl-training` itself, using a fine-grained PAT scoped only to `terrassay/terrassay` and stored in macOS Keychain. No machine account or collaborator invite is needed.
 
-No Pro, Team, or Enterprise plan is required for a public repo in a free organisation. There is **no second human account**. Superagent gets **full repository access** (branches, PRs, issues, Actions read) but not org ownership, billing, repository admin, or secrets; `main` stays protected and merges are human.
+No Pro, Team, or Enterprise plan is required for a public repo in a free organisation. There is **no second account and no automation identity**; `main` stays protected and merges are human.
 
 **Legal position:** original code, synthetic data, no scraping, no redistribution of vendor data, licence-audited dependencies, and a **public pre-flight self-audit**. There is no budget for counsel yet, so the project stays in a synthetic-data, no-customer-data, no-paid-service posture; counsel review is required before real customer data, a commercial service, or a vendor-data integration. This plan is not legal advice.
 
@@ -48,7 +47,7 @@ No Pro, Team, or Enterprise plan is required for a public repo in a free organis
 | Self-hosted beta (v0.1) | Milestone-driven; no fixed date |
 | Phase 1 effort | ~100 person-days |
 | Total effort to beta | ~274 person-days (estimate, not a commitment) |
-| Team | 1 maintainer + AI agents; community contributors |
+| Team | 1 maintainer + the assistant; community contributors |
 | Cash to demo | <€50 first year (optional domain), excluding model usage |
 | Infrastructure | Local Docker; free tiers; optional €5–20/month |
 | Core licence | Apache-2.0 |
@@ -67,8 +66,8 @@ These are fixed inputs from the project owner. They take precedence over generic
 | C2 | **Reuse GeoLibre** via embed/plugins; build the BIM shell separately | No fork; GeoLibre is a versioned dependency with a typed boundary |
 | C3 | **No Revizto access yet**; plan around a mock + partner project | Mock connector is a first-class deliverable; real adapter follows access |
 | C4 | **Local demo only** for now | Optimise for demo speed and safety; defer tenancy, SSO, and billing |
-| C5 | **Free GitHub org, single account** | Human `atpl-training` owns free org `terrassay`; Superagent uses the same account via a repo-scoped Keychain token |
-| C6 | Integrate **DeepSeek Superagent** early in development | Full repo access, isolated runner, protected main, human review |
+| C5 | **Free GitHub org, single human account** | Human `atpl-training` owns free org `terrassay`; no bot/machine account |
+| C6 | **Human + assistant only** | No autonomous agent, no bot account, no auto-merge; human review |
 | C7 | Everything must be **legal, open source, testing-only** | Clean-room, synthetic data, licence audit, self-audit before public |
 | C8 | **Solo maintainer, no team, no budget** | Scope is cut to the demo; calendar is full-time/part-time dependent |
 | C9 | **3D is in scope** | Synthetic massing + terrain; still no Revizto model geometry |
@@ -76,7 +75,7 @@ These are fixed inputs from the project owner. They take precedence over generic
 
 ### Planning assumptions
 
-- One maintainer works with this assistant and `dsh-superagent`; there is no paid team.
+- One maintainer works with this assistant; there is no paid team.
 - The repository is **public from bootstrap**, contains only synthetic data, and carries a "planning/testing" disclaimer.
 - The demo runs locally with Docker Compose; hosted infrastructure is optional and free-tier only.
 - Basemaps and data use open licences and attribution; local models are the default AI option.
@@ -120,7 +119,6 @@ Several otherwise attractive components carry licences that need care:
 - **MinIO**'s server licence needs review; **SeaweedFS** (Apache-2.0) is the default for distribution, with MinIO acceptable for local development.
 - **pyRevizto** is GPL-3.0. It is listed only to flag the licence risk; we do not copy or link it into Apache-2.0 code.
 - **GeoLibre** is MIT and embeddable, but its bundled engines, basemaps, and Cesium Ion integration have their own terms.
-- **dsh-superagent** is MIT, but it is a research prototype that runs with full OS user access and is not production software.
 
 **Decision:** licence compatibility is checked in CI, high-risk dependencies are isolated behind process boundaries, and a self-audit precedes the public repository. Counsel review is required before customer data or a commercial service, not for the synthetic demo. See [LEGAL_COMPLIANCE.md](LEGAL_COMPLIANCE.md).
 
@@ -411,24 +409,13 @@ Guardrails:
 
 ---
 
-## 10. Development automation with Superagent
+## 10. Development workflow
 
-Full detail: [DEV_AUTOMATION.md](DEV_AUTOMATION.md).
-
-`dsh-superagent` is an MIT-licensed research prototype from DeepSeek. It runs as a dedicated DeepSeek Harness profile, watches a GitHub repository, and turns authorised requests into Tickets, isolated worker sessions, and pull requests. It requires a **dedicated GitHub user account** (not a GitHub App), uses the `gh` CLI under that account, and runs with full OS user access.
-
-We will use it from the first coding sprint, but only inside a narrow lane:
-
-- **Scope:** tests, docs, fixtures, refactors, dependency-free small features, CI fixes. Not auth, crypto, licensing files, release engineering, or architecture changes without explicit approval.
-- **Trigger:** an issue labelled `agent-ready` with acceptance criteria, or a comment mentioning `@atpl-training` (enable comment observation if self-mentions do not arrive). No proactive mode; accept mode `observe` until we have reviewed its behaviour.
-- **Isolation:** dedicated VM or OS user with only the bot's credentials; no customer data, no Revizto tokens, no cloud admin keys, no personal GitHub CLI, no SSH agent.
-- **Review:** branch protection, CODEOWNERS, required CI, one human approval, no auto-merge. The bot cannot merge, approve, or change workflows.
-- **Disclosure:** PRs state that they are AI-assisted and name the agent account; commits are authored by the bot, not a human.
-- **Kill switch:** pause the executor, revoke the bot token, remove repo access.
-
-This is a development tool, not part of the Terrassay product. It is not shipped to users and does not process customer data.
-
----
+- The project is built **interactively** by the maintainer with the DeepSeek Harness assistant.
+- There is **no autonomous coding agent**, no bot account, and no auto-merge.
+- Every change is reviewed, tested, and committed by the maintainer.
+- AI-assisted changes are disclosed where relevant.
+- The assistant has access to the local workspace, not to GitHub credentials or production secrets.
 
 ## 11. GitHub organisation and identity
 
@@ -437,12 +424,11 @@ Full checklist: [GITHUB_ORG_SETUP.md](GITHUB_ORG_SETUP.md).
 The selected setup uses a **free organisation** and a **single human account**:
 
 - **Human account:** `atpl-training` owns the free organisation `terrassay`; reviews, merges, and handles billing.
-- **Superagent identity:** `atpl-training`, using a repo-scoped fine-grained PAT stored in macOS Keychain. It gets full repository write access but no org admin, billing, repository admin, or secrets.
 - **Organisation:** `terrassay` on the Free plan. No Pro, Team, or Enterprise is required for a public repo.
 - **Repository:** `terrassay/terrassay`, public from bootstrap, with branch protection, CODEOWNERS, secret scanning, Dependabot, and a read-only `GITHUB_TOKEN`.
 - **Clean history:** no personal email addresses, personal SSH keys, or imported private commits.
 
-**Honest limitation:** a GitHub organisation must be owned by a user account, and ownership is not anonymous to GitHub or to org members. This setup gives the project a clean public identity and scopes automation to one repo, but it does not create a separate bot identity or make ownership untraceable. A second **free human** account is not permitted, and is not used.
+**Honest limitation:** a GitHub organisation must be owned by a user account, and ownership is not anonymous to GitHub or to org members. This setup gives the project a clean public identity, but it does not make ownership untraceable. A second **free human** account is not permitted, and is not used.
 
 The repository is public from bootstrap, after the [Gate A self-audit](LEGAL_COMPLIANCE.md#12-launch-gates). Counsel is required before customer data or a paid service (Gate B), not for the synthetic demo.
 
@@ -516,7 +502,7 @@ Phase 1 breakdown:
 
 | Mode | Demo | Beta | Notes |
 |---|---:|---:|---|
-| Solo, full-time + AI agents | 12–16 weeks | 6–9 months | **Plan baseline** |
+| Solo, full-time + assistant | 12–16 weeks | 6–9 months | **Plan baseline** |
 | Solo, part-time (~20 h/week) | 5–8 months | 12–18 months | Most likely for an unfunded project |
 | Solo + regular contributors | 10–14 weeks | 5–8 months | Community review accelerates, but coordination costs |
 | Paid team | 8–12 weeks | 4–6 months | Not funded; included only for comparison |
@@ -551,8 +537,7 @@ Top risks; full register with triggers and owners in [RISKS.md](RISKS.md).
 | R4 | Georeferencing errors create liability | M | H | Confidence labels; residuals; disclaimers; no survey-grade claims | User asks for "exact" placement |
 | R5 | AI hallucination or prompt injection | M | H | Typed tools; citations; read-only; evals; injection tests | Any uncited spatial claim |
 | R6 | Licence contamination (GPL/AGPL, copied code) | M | H | Inventory; process isolation; clean-room; CI; counsel before commercial | New dependency without review |
-| R7 | Superagent causes a bad merge or leaks credentials | M | H | Isolation; allowlist; branch protection; no auto-merge; kill switch | PR touching auth/workflows |
-| R8 | New org/identity setup blocks progress | L | M | Bootstrap in week 1; single-account Keychain path; documented | No org by day 3 |
+| R8 | New org/identity setup blocks progress | L | M | Bootstrap in week 1; human-only org path; documented | No org by day 3 |
 | R9 | Self-host complexity kills adoption | M | M | Compose profiles; one command; diagnostics; docs | Install > 30 min |
 | R10 | Performance degrades with large projects | M | M | MVT/COG/PMTiles; clustering; budgets; load tests | p95 > 1 s at 10k issues |
 | R11 | Solo maintainer burnout or capacity loss | H | H | Narrow scope; milestone-driven; AI leverage; public "not doing" list | Missed milestone by >4 weeks |
@@ -607,8 +592,8 @@ Full detail: [LICENSING_BUSINESS.md](LICENSING_BUSINESS.md).
 | D6 | Postgres job queue; Valkey optional | Proposed |
 | D7 | AI orchestration in Rust with typed tools | Proposed |
 | D8 | Apache-2.0, DCO, no commercial tier for now | Proposed |
-| D9 | Free org `terrassay` owned by `atpl-training`; Superagent runs under the same account with a repo-scoped token in macOS Keychain; no second account | Accepted |
-| D10 | Superagent gets full repository access, but not org/billing/secrets; human merges via admin bypass | Accepted |
+| D9 | Free org `terrassay` owned by `atpl-training`; no bot/machine account; no paid plan | Accepted |
+| D10 | Human + assistant development; no autonomous agent, no auto-merge | Accepted |
 | D11 | No Revizto model geometry in the demo; 3D is synthetic massing | Accepted |
 | D12 | Public pre-flight self-audit; counsel before customer data or commercial service | Accepted |
 | D13 | Project name: Terrassay (preliminary clearance) | Accepted |
@@ -634,8 +619,8 @@ Full detail: [LICENSING_BUSINESS.md](LICENSING_BUSINESS.md).
 | 1 | Create the organisation; enable 2FA, secret scanning, Dependabot | Maintainer | Org settings recorded |
 | 2 | Create the **public** repo, ruleset, CODEOWNERS, issue/PR templates | Maintainer | `main` requires PR + CI + review |
 | 2 | Add Apache-2.0, NOTICE, CONTRIBUTING, SECURITY, CoC, GOVERNANCE, NAMING | Maintainer | Files reviewed; no personal data |
-| 3 | Create the fine-grained PAT, store it in macOS Keychain, add the `gh-terrassay` wrapper | Maintainer | `gh-terrassay api user` prints `atpl-training`; token scoped to one repo |
-| 3–4 | Install Superagent on an isolated VM; configure GitHub source, allowlist, observe mode, no auto-merge | Maintainer | Test issue produces a PR; no merge |
+| 3 | Initialize CI, branch protection, and the first local commit | Maintainer | `main` is protected; CI skeleton exists |
+| 3–4 | Initialize CI, branch protection, and the first local commit; no agent install | Maintainer | `main` is protected; CI skeleton exists |
 | 4–5 | GeoLibre embed spike: host, iframe, addLayer, setFilter, highlight, selection, signed COG | Maintainer | Spike report + go/no-go |
 | 5–6 | Revizto access checklist and mock contract; no credentials needed | Maintainer | Canonical schema v1 |
 | 6–7 | Demo narrative and fixture spec; generate 240 synthetic issues + massing footprints | Maintainer | Fixture review; all data fictional |
@@ -696,7 +681,5 @@ The repository is a polyglot monorepo: pnpm workspaces (web), Cargo workspace (R
 - `@geolibre/embed` — <https://www.npmjs.com/package/@geolibre/embed>
 - GeoLibre plugin API — <https://geolibre.app/plugin-api/>
 - GeoLibre repository — <https://github.com/opengeos/GeoLibre>
-- DeepSeek Superagent prototype — <https://github.com/deepseek-ai/dsh-superagent-prototype>
-- Superagent deployment and isolation — <https://github.com/deepseek-ai/dsh-superagent-prototype/blob/main/docs/006-deployment.md>
 - pyRevizto (GPL-3.0; not used in the build) — <https://pypi.org/project/pyrevizto/0.7/>
 - Ageospatial (competitive reference) — <https://www.ageospatial.com/about>

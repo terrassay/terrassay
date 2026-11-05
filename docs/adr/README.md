@@ -13,7 +13,6 @@ Each ADR captures a decision that constrains the build. Statuses: **Accepted**, 
 | [0007](0007-ai-orchestration.md) | AI orchestration in Rust with typed tools | Proposed |
 | [0008](0008-licensing.md) | Apache-2.0, DCO, and no commercial tier for now | Proposed |
 | [0009](0009-new-github-org.md) | Free GitHub organisation with a single human account | Accepted |
-| [0010](0010-superagent.md) | Superagent for scoped development automation | Accepted |
 | [0011](0011-legal-gate.md) | Two legal gates: synthetic public release and commercial use | Accepted |
 | [0012](0012-3d-strategy.md) | 3D massing in the demo; no BIM geometry from Revizto | Accepted |
 | [0013](0013-auth-tenancy.md) | Demo-first auth and single-tenant tenancy model | Proposed |

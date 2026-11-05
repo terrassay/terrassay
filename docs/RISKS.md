@@ -20,8 +20,7 @@
 | R5 | Georeferencing error creates liability | 3 | 5 | 15 | User asks for "exact" placement | Confidence labels, residuals, disclaimers, verification | Disable analysis on indicative locations |
 | R6 | AI hallucination or prompt injection | 3 | 5 | 15 | Uncited spatial claim | Typed tools, citations, evals, read-only, injection tests | Disable AI for that project |
 | R7 | Licence contamination (GPL/AGPL/copied code) | 3 | 5 | 15 | New dependency without review | Inventory, CI, clean-room, process isolation | Remove/replace before commercial |
-| R8 | Superagent causes a bad merge or credential leak | 3 | 5 | 15 | PR touches auth/workflows/secrets | Isolation, allowlist, branch protection, no auto-merge, kill switch | Revert; rotate secrets; pause |
-| R9 | GitHub org/token setup violates terms or stalls | 3 | 3 | 9 | No org by day 3 | Free org + single human account + Keychain token; no second human account | Use a personal repo under `atpl-training` |
+| R9 | GitHub org/repo setup stalls | 3 | 3 | 9 | No org by day 3 | Free org + single human account; documented | Use a personal repo under `atpl-training` |
 | R10 | Self-host install too complex | 3 | 3 | 9 | Install > 30 min | Compose profiles, one command, diagnostics, docs | Simplify the demo stack |
 | R11 | Performance degrades on large projects | 3 | 3 | 9 | p95 > 1 s at 10k issues | MVT, clustering, COG/PMTiles, load tests | Cap project size; pre-aggregate |
 | R12 | Revizto terms restrict caching/AI | 3 | 4 | 12 | Legal/API review | Read terms; ask vendor; data minimization | Local-only; no caching |
@@ -44,12 +43,6 @@ The API is a coordination-data API, not a model-exchange API. If the demo promis
 
 **Watch:** any request that assumes model geometry from Revizto. Answer with the capability matrix and the IFC path.
 
-### R8 — Superagent with full repo access
-
-Superagent is a research prototype with full OS access and will have full repository access. The biggest risk is not a malicious agent; it is a plausible but wrong change that a tired maintainer merges. The second risk is credential exposure.
-
-**Controls:** isolated VM/OS user, only the repo-scoped Keychain token, no org admin, no secrets, protected `main`, required CI, human review, no auto-merge, kill switch. If a PR touches auth, workflows, or secrets, close it and redo with a human.
-
 ### R14 — Solo burnout
 
 This is the highest-likelihood high-impact risk. A solo, unfunded project can fail because the maintainer runs out of energy, not because the code is wrong.
@@ -66,7 +59,7 @@ The project stays in the synthetic, no-customer-data, no-paid-service posture un
 
 | Gate | When | Question | If no |
 |---|---|---|---|
-| G0 | Day 3 | Free org/repo ready and Keychain token works? | Use a personal repo under `atpl-training`; same token |
+| G0 | Day 3 | Free org/repo ready? | Use a personal repo under `atpl-training` |
 | G1 | Week 2 | GeoLibre embed supports add/filter/highlight/selection? | Switch to custom map-host plugin |
 | G2 | Week 4 | Revizto access path clear? | Continue mock; defer connector |
 | G3 | Week 8 | Mock sync + issues + map working? | Cut dataset breadth; focus on core narrative |
@@ -105,7 +98,6 @@ The project stays in the synthetic, no-customer-data, no-paid-service posture un
 | Self-hosting matters to security-conscious firms | 3–5 conversations with IT/security | After demo |
 | A 10-minute demo is convincing | 3 rehearsals + feedback | Week 16 |
 | GeoLibre is stable enough to embed | Spike + one upgrade cycle | Week 8 |
-| Superagent saves time on this codebase | Measure 10 tasks | Week 8 |
 | A solo maintainer can deliver the demo | Weekly burn-up; cut scope if behind | Weekly |
 
 ---

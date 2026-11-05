@@ -4,7 +4,7 @@
 |---|---|
 | **Status** | Proposed |
 | **Scope** | Demo, self-hosted beta, development automation |
-| **Related** | [ARCHITECTURE](ARCHITECTURE.md) · [AI_ASSISTANT](AI_ASSISTANT.md) · [DEV_AUTOMATION](DEV_AUTOMATION.md) · [LEGAL_COMPLIANCE](LEGAL_COMPLIANCE.md) |
+| **Related** | [ARCHITECTURE](ARCHITECTURE.md) · [AI_ASSISTANT](AI_ASSISTANT.md) · [LEGAL_COMPLIANCE](LEGAL_COMPLIANCE.md) |
 
 ---
 
@@ -35,7 +35,7 @@
 | Supply chain | npm/crates/PyPI compromise | RCE, data theft | Lockfiles, pinned versions, SCA, SBOM, provenance, minimal dependencies |
 | Secret leakage | Git, logs, errors | Credential compromise | Secret scanning, redaction, vault, no secrets in env examples |
 | DoS | Large files, expensive queries, AI loops | Outage/cost | Limits, quotas, timeouts, job budgets, rate limits |
-| Insider/agent misuse | Superagent with full OS access | Repo compromise | Isolation, least privilege, branch protection, no auto-merge |
+| Insider misuse | A maintainer account or local machine is compromised | Repo compromise | Least privilege, branch protection, no auto-merge, audit |
 | Backup theft | Unencrypted backups | Data breach | Encryption at rest, access control, restore tests |
 
 ---
@@ -148,26 +148,6 @@ In self-hosted/air-gapped mode, outbound fetches can be disabled entirely.
 
 ---
 
-## 10. Superagent and development automation
-
-Superagent runs with full OS user access and can read the operator's home directory. Treat the runner as a compromised host from the project's perspective.
-
-Controls:
-
-- Dedicated VM or OS user; no personal credentials, SSH agent, cloud keys, or Revizto tokens.
-- Dedicated bot GitHub account, write to one repo, no admin/secrets/workflows.
-- Allowlisted maintainers only; observe mode first; no auto-merge.
-- Branch protection, CODEOWNERS, required CI, human review.
-- Blocked commands for personal/cloud CLIs; egress allowlist.
-- No customer/project data in the workspace.
-- Kill switch tested; logs retained.
-- Supply-chain review for anything the agent installs.
-- AI disclosure in PRs; human DCO sign-off.
-
-See [DEV_AUTOMATION](DEV_AUTOMATION.md).
-
----
-
 ## 11. Supply chain
 
 - Lockfiles committed; CI uses `--frozen-lockfile` / `--locked`.
@@ -221,7 +201,7 @@ Metrics:
 ## 14. Incident response
 
 1. **Detect:** alert, report, or audit anomaly.
-2. **Contain:** revoke tokens, disable the connection, pause the worker/agent, isolate the host.
+2. **Contain:** revoke tokens, disable the connection, pause the worker, isolate the host.
 3. **Assess:** scope, data affected, legal/notification obligations.
 4. **Eradicate:** patch, rotate secrets, rebuild from a clean image.
 5. **Recover:** restore, verify, monitor.
@@ -245,7 +225,6 @@ Contacts and severity levels are maintained in the private runbook. A public `SE
 - [ ] Backup/restore tested.
 - [ ] Pen test (external) with critical/high findings fixed.
 - [ ] Incident runbook and contacts current.
-- [ ] Superagent kill switch tested.
 - [ ] AI injection/exfiltration evals pass.
 
 No pilot with real data until this checklist is green.

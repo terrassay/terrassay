@@ -5,7 +5,7 @@
 Terrassay connects BIM coordination data to geographic context. It is a self-hostable workspace where a construction team can locate a project on a map, overlay site and environmental data, ask spatial questions, and get answers grounded in the project record.
 
 > **Status: planning + bootstrap — v0.1, November 2026.**
-> Built by a solo maintainer working with AI agents. Open source from the start, with synthetic data and no paid tier.
+> Built by a solo maintainer working with the DeepSeek Harness assistant. Open source from the start, with synthetic data and no paid tier.
 > No application code exists yet; this repository contains the build plan, governance, and architecture decision records.
 > The first milestone is a local, reproducible demo. There is no fixed deadline.
 
@@ -83,10 +83,7 @@ Full detail: [ARCHITECTURE.md](docs/ARCHITECTURE.md) · [DATA_MODEL.md](docs/DAT
 | [GEOSPATIAL.md](docs/GEOSPATIAL.md) | Georeferencing, formats, tiling, analysis catalog, performance |
 | [AI_ASSISTANT.md](docs/AI_ASSISTANT.md) | Agent architecture, tools, grounding, evals, local inference |
 | [SECURITY.md](docs/SECURITY.md) | Threat model, token handling, tenancy path, AI and supply-chain controls |
-| [DEV_AUTOMATION.md](docs/DEV_AUTOMATION.md) | Superagent integration, isolation, review rules, metrics |
-| [SUPERAGENT_LOCAL.md](docs/SUPERAGENT_LOCAL.md) | This machine: local Superagent paths, Keychain, port, start/status |
 | [GITHUB_ORG_SETUP.md](docs/GITHUB_ORG_SETUP.md) | Free org, human account, repo settings, branch protections |
-| [MACHINE_ACCOUNT_SETUP.md](docs/MACHINE_ACCOUNT_SETUP.md) | Create the one free machine account and give it repo access |
 | [LEGAL_COMPLIANCE.md](docs/LEGAL_COMPLIANCE.md) | Licence matrix, clean-room rules, Revizto/GeoLibre/AI compliance, launch gate |
 | [LICENSING_BUSINESS.md](docs/LICENSING_BUSINESS.md) | Apache-2.0, community sustainability, trademarks |
 | [RISKS.md](docs/RISKS.md) | Risk register, triggers, kill criteria, decision gates |
@@ -99,12 +96,11 @@ Full detail: [ARCHITECTURE.md](docs/ARCHITECTURE.md) · [DATA_MODEL.md](docs/DAT
 - **First audience:** local demo and early contributors; not a customer-facing deployment.
 - **First integration:** Revizto, developed mock-first because there is no API access yet.
 - **Map surface:** GeoLibre, reused via its embed API and official container image.
-- **Team:** one maintainer plus AI agents; community contributions welcome. There is no paid team or fixed schedule.
+- **Team:** one maintainer working with the DeepSeek Harness assistant; community contributions welcome. There is no paid team or fixed schedule.
 - **Timeline:** 12–16 weeks full-time, or 5–8 months part-time, to the demo. Beta is milestone-driven.
 - **Budget:** near-zero. Local Docker, free/open basemaps, local models, and GitHub's free organisation/public-repo features. A domain is optional; there is no paid GitHub plan.
 - **Licence:** Apache-2.0.
-- **Identity:** human account `atpl-training` owns the free organisation `terrassay`; Superagent runs under that same account with a repo-scoped fine-grained PAT stored in macOS Keychain; public repo `terrassay/terrassay`. No second account, no paid plan.
-- **Development automation:** DeepSeek `dsh-superagent` from the first coding sprint, with full repository access, isolated and human-reviewed.
+- **Identity:** human account `atpl-training` owns the free organisation `terrassay` and the public repo `terrassay/terrassay`. No second account, no paid plan.
 - **3D:** synthetic site massing and terrain in the demo; no Revizto model geometry is assumed.
 
 ## Legal position (short version)
@@ -125,7 +121,6 @@ The repository is public from bootstrap so anyone can read, test, and contribute
 - [MapLibre](https://maplibre.org/), [CesiumJS](https://cesium.com/platform/cesiumjs/), [deck.gl](https://deck.gl/) — rendering.
 - [PostGIS](https://postgis.net/), [GDAL](https://gdal.org/), [PROJ](https://proj.org/), [PDAL](https://pdal.io/), [DuckDB](https://duckdb.org/) — geospatial foundations.
 - [Revizto](https://revizto.com/) — the first intended BIM integration. Terrassay is not affiliated with or endorsed by Revizto.
-- [dsh-superagent](https://github.com/deepseek-ai/dsh-superagent-prototype) — MIT-licensed development automation prototype.
 
 ## Licence
 

@@ -101,7 +101,6 @@ These are **availability signals, not reservations or legal clearance**. Domain 
 | Human owner | `atpl-training` |
 | Organisation | `terrassay` |
 | Repository | `terrassay/terrassay` |
-| Superagent identity | `atpl-training` via macOS Keychain token |
 | Public URL | `https://github.com/terrassay/terrassay` |
 
 The org is on the **Free** plan. No paid GitHub plan is required for a public repo.

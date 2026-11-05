@@ -32,7 +32,7 @@ The legal strategy is simple: **write original code, use official interfaces, ta
 4. **No credential sharing.** OAuth tokens belong to the authorising user and are encrypted at rest. Never put a vendor secret in git, chat, or a demo fixture.
 5. **No trademark misuse.** Do not use another company's name or logo as our brand, or imply endorsement.
 6. **No unlicensed dependencies.** Every dependency is inventoried, licence-checked, and approved before merge.
-7. **No anonymous evasion.** The GitHub bot account is disclosed as automation. We do not create fake identities or evade platform limits.
+7. **No anonymous evasion.** No bot/machine account is used. We do not create fake identities or evade platform limits.
 8. **No customer data or paid service without the commercial gate.** The public synthetic repo uses the self-audit in §12; the commercial/customer-data gate requires counsel.
 
 ---
@@ -44,7 +44,7 @@ To reduce the risk of copying protected code or data:
 - Contributors work from **public documentation, public APIs, and observed behaviour** — not from proprietary source.
 - The Revizto adapter is implemented from the official API documentation and our own contract tests. `pyRevizto` (GPL-3.0) is **not used in the build**; it is listed only to flag the licence risk. No code is copied, linked, or vendored.
 - The GeoLibre integration uses the published `@geolibre/embed` package and official container image. We do not copy GeoLibre internals into our code.
-- AI coding agents are instructed not to reproduce code from training data or external repositories; AI-assisted PRs are scanned and reviewed.
+- The coding assistant is instructed not to reproduce code from training data or external repositories; AI-assisted PRs are scanned and reviewed.
 - Design documents record the source of any non-obvious behaviour (a link to public docs, a test, or a spec).
 
 If a contributor has seen proprietary source at a previous employer, they must not contribute equivalent code. Pause and seek advice before accepting the contribution.
@@ -82,7 +82,6 @@ This is a starting inventory. It is verified by automated tooling and updated as
 | **SeaweedFS** | Apache-2.0 | Default self-host object store | NOTICE | Approved |
 | **MinIO** | AGPL-3.0 (verify current) | Local development only | Network-copyleft risk if distributed/modified | Dev only; review |
 | **pyRevizto** | GPL-3.0 | Not used; listed for licence risk | Cannot copy/link into Apache-2.0 code | Prohibited in product |
-| **dsh-superagent** | MIT | Development tool only | Preserve notice; research prototype | Approved for dev |
 | **OpenStreetMap data** | ODbL | Basemap | Attribution + share-alike for derived DB | Attribution; review |
 | **Protomaps / OpenFreeMap** | Check current terms | Basemap | Attribution/usage limits | Review |
 | **Swisstopo / cantonal data** | Open government terms | Demo layers | Attribution; some datasets non-commercial | Verify per dataset |
@@ -162,7 +161,7 @@ Revizto is a third-party platform. We do not own its API, data, or marks.
 
 ---
 
-## 7. AI and development automation
+## 7. AI and development
 
 ### Product AI
 
@@ -173,15 +172,14 @@ Revizto is a third-party platform. We do not own its API, data, or marks.
 - **Copyright:** do not ask the model to reproduce copyrighted text or code; citations are to project records, not third-party content.
 - **Prompt injection:** project text is untrusted; tools are typed and permission-scoped.
 
-### Development automation (Superagent)
+### AI-assisted development
 
-- `dsh-superagent` is MIT-licensed and is a **research prototype**, not a production product ([repository](https://github.com/deepseek-ai/dsh-superagent-prototype)).
-- It is used only on original project code, with synthetic fixtures, in an isolated environment.
-- No customer data, vendor credentials, production secrets, or personal data in the agent's workspace.
-- AI-assisted pull requests are reviewed by a human, scanned for copied code, and disclosed.
-- The agent's GitHub account is labelled as automation; it does not approve or merge its own work.
-- The model provider's terms apply to prompts and outputs. Use a provider/configuration approved for source code; do not send third-party confidential code.
-- **Ownership:** human contributors remain responsible for the contribution. The DCO is signed by a human who has the right to submit the code. AI-generated code may have uncertain copyright status in some jurisdictions; the policy is documented now and counsel confirms it before a commercial launch.
+- Code is written **interactively** with a coding assistant; no autonomous coding agent runs in CI or watches the repository.
+- Every change is reviewed by the maintainer and covered by tests before merge.
+- No customer data, vendor credentials, production secrets, or personal data go into prompts.
+- AI-assisted pull requests/commits are disclosed where relevant, and the human signatory owns the DCO.
+- The model provider's terms apply to prompts and outputs. Do not send third-party confidential code.
+- AI-generated code may have uncertain copyright status in some jurisdictions; the policy is documented now and counsel confirms it before a commercial launch.
 
 ---
 
@@ -240,8 +238,7 @@ Revizto is a third-party platform. We do not own its API, data, or marks.
 ## 11. Platform and security-testing compliance
 
 - Comply with the GitHub Acceptable Use Policies and Terms of Service.
-- GitHub permits one free Personal Account and one free **machine account**, but this project uses only the human account: `atpl-training` owns the free `terrassay` organisation and runs Superagent under a repo-scoped token stored in macOS Keychain. There is no second human account.
-- Superagent activity under `atpl-training` is disclosed in PRs as AI-assisted; no spam, scraping, fake engagement, or limit evasion.
+- This project uses one free human GitHub account (`atpl-training`) and no machine/bot account. No spam, scraping, fake engagement, or limit evasion.
 - Do not perform security testing against Revizto, GeoLibre, or any third party without written authorisation.
 - Report vulnerabilities in third-party software through their security channels.
 - Do not use the project to bypass access controls, licences, or paywalls.

@@ -40,7 +40,7 @@ There is **no paid edition, no open-core paywall, no pricing, and no revenue pla
 
 - The project is free to use, self-host, modify, and redistribute under Apache-2.0.
 - There is no hosted service, no customer data, and no support contract.
-- The maintainer is not funded; the project is built with time and AI agents.
+- The maintainer is not funded; the project is built with time and the assistant.
 - Community contributions are welcome and are not asked to sign a CLA.
 
 This avoids the complexity of open-core boundaries, pricing pages, and commercial legal work while the product is unproven.
@@ -79,7 +79,6 @@ Specific decisions:
 - **pyRevizto** (GPL-3.0) is not used; the Revizto adapter is a clean-room implementation from public docs.
 - **GeoLibre** (MIT) is embedded with notices; its bundled engines and basemaps are checked separately.
 - **Cesium Ion** is optional; the core works without it.
-- **dsh-superagent** (MIT) is a development tool, not distributed with the product.
 
 CI enforces the allowlist with `cargo-deny`, `pnpm licenses`, `pip-licenses`, and an SBOM. A new licence family requires human review.
 

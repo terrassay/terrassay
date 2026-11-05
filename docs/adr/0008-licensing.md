@@ -37,7 +37,7 @@ The project is a solo, unfunded, open-source effort. It should be adoptable by c
 
 **Mitigations**
 
-- Keep costs near zero: local-first, free tiers, AI agents.
+- Keep costs near zero: local-first, free tiers, the assistant.
 - Accept donations/sponsorships only with transparency.
 - CI licence checks; Gate B review before any commercial step.
 - Publish `NOTICE` and third-party licences.

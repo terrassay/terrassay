@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Status** | Proposed |
-| **Baseline** | 1 maintainer + AI agents; no paid team; no fixed deadline |
-| **Related** | [BUILD_PLAN](BUILD_PLAN.md) · [RISKS](RISKS.md) · [DEV_AUTOMATION](DEV_AUTOMATION.md) |
+| **Baseline** | 1 maintainer + the assistant; no paid team; no fixed deadline |
+| **Related** | [BUILD_PLAN](BUILD_PLAN.md) · [RISKS](RISKS.md) |
 
 ---
 
@@ -15,7 +15,7 @@
 3. **Reuse the map.** GeoLibre is a dependency, not a workstream.
 4. **One vertical slice at a time.** Project → location → data → question → answer.
 5. **Public and synthetic by default.** The repository is public, the data is fictional, and no customer data is processed.
-6. **Automate the boring work.** Superagent handles scoped tests/docs/refactors under human review.
+6. **Use the assistant for scoped work.** Tests, docs, and refactors are still reviewed and merged by the maintainer.
 7. **Milestones over dates.** There is no funded team; a missed week is information, not a failure.
 8. **Protect the maintainer.** Scope is cut before health, sleep, or quality.
 
@@ -31,7 +31,7 @@
 | **3 — Self-hosted beta** | Ongoing | 82 PD | Connector SDK, collaboration, SSO, docs, release 0.1 | Partners; upgrade/backup test; self-audit |
 | **Total** | **Not a deadline** | **274 PD** | Open-source beta | Quality, not calendar |
 
-Capacity assumption: one maintainer, full-time or part-time, with AI agents for scoped work. Phase 1's 100 PD is roughly 12–16 weeks full-time after AI leverage; part-time stretches to 5–8 months. Contingency is held at the milestone level.
+Capacity assumption: one maintainer, full-time or part-time, with the assistant for scoped work. Phase 1's 100 PD is roughly 12–16 weeks full-time after AI leverage; part-time stretches to 5–8 months. Contingency is held at the milestone level.
 
 ---
 
@@ -58,18 +58,17 @@ Dates assume full-time work. If part-time, multiply by roughly 2–2.5.
 
 | Workstream | Deliverable | PD | Owner |
 |---|---|---:|---|
-| Account & org | Free org `terrassay`, human `atpl-training`, Keychain token, public repo, ruleset | 2 | Maintainer |
+| Account & org | Free org `terrassay`, human `atpl-training`, public repo, ruleset | 2 | Maintainer |
 | Legal/naming baseline | Apache-2.0, NOTICE, CONTRIBUTING, SECURITY, CoC, NAMING, dependency policy | 2 | Maintainer |
 | GeoLibre spike | Host map, iframe, addLayer, setFilter, highlight, selection, signed COG | 3 | Maintainer |
 | Revizto discovery | Access checklist, API questions, canonical schema v1 | 2 | Maintainer |
 | Demo fixture | Narrative, 240 synthetic issues, 3 datasets, control points, massing footprints | 2 | Maintainer |
-| Superagent | `gh-terrassay` Keychain wrapper, observe mode, test PR | 1 | Maintainer |
 | **Total** | | **12** | |
 
 **Decision gate (end week 2):**
 
 - If the embed spike fails, switch to the custom map-host plugin path before building the shell.
-- If the GitHub account cannot be created compliantly, use `atpl-training` as owner and the repo-scoped Keychain token for Superagent.
+- If the org cannot be created, use a personal repo under `atpl-training`.
 - If the AI provider is not settled, use local models or a deterministic mock.
 
 ---
@@ -126,7 +125,6 @@ If the pace is slower, extend to 16–18 weeks; do not cut the rehearsal or secu
 - [ ] 10 demo questions pass; 25 eval questions recorded.
 - [ ] No critical/high findings in the demo security self-review.
 - [ ] Public pre-flight checklist green; all data synthetic and labelled.
-- [ ] Superagent has merged at least 3 reviewed PRs without incident.
 - [ ] Demo script and fallback plan documented.
 
 ---
@@ -179,7 +177,6 @@ Account/repo → GeoLibre spike → map host + bridge → localization → mock 
 Parallel tracks:
 
 - Naming/trademark and public pre-flight.
-- Superagent setup (week 1, then continuous).
 - Revizto access (starts week 1; does not block the demo).
 - Fixtures/design (week 1–2, then continuous).
 
@@ -192,7 +189,6 @@ Schedule risks:
 | AI quality/tooling | 1–2 weeks | Deterministic mock; narrow tools; evals |
 | Solo capacity/burnout | 1–2 months | Cut scope; part-time schedule; public "not doing" list |
 | Legal review absent | Commercial launch slip | Stay synthetic; defer customer data |
-| Superagent rework | 10–20% overhead | Narrow scope; measure; pause if negative |
 
 ---
 
@@ -213,7 +209,7 @@ AI leverage is assumed for tests, docs, fixtures, and small features. It does no
 
 | Days | Focus | Output |
 |---|---|---|
-| 1–14 | Account, org, governance, Superagent, spike, fixture | M1 gate |
+| 1–14 | Account, org, governance, spike, fixture | M1 gate |
 | 15–28 | Foundation, projects, auth, map, localization | Project on the map |
 | 29–42 | Mock sync, issues, datasets | Project data + external layers |
 | 43–56 | Assistant, 3D massing, analyses | Grounded answers + 3D context |

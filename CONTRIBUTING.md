@@ -30,7 +30,6 @@ AI-assisted work is welcome if:
 - The contribution does not copy unlicensed code.
 - The human signs the DCO.
 
-The project uses `dsh-superagent` for scoped tasks. See [docs/DEV_AUTOMATION.md](docs/DEV_AUTOMATION.md).
 
 ## Workflow
 

@@ -3,60 +3,56 @@
 - **Status:** Accepted
 - **Date:** 2026-11-04
 - **Deciders:** Maintainer
-- **Related:** [GITHUB_ORG_SETUP](../GITHUB_ORG_SETUP.md) · [DEV_AUTOMATION](../DEV_AUTOMATION.md)
+- **Related:** [GITHUB_ORG_SETUP](../GITHUB_ORG_SETUP.md)
 
 ## Context
 
-The project needs a clean public identity, least-privilege automation, and a path to open source without a paid GitHub plan. A GitHub organisation must be owned by a Personal Account. GitHub's Terms permit one free Personal Account and one free machine account; a second free human account is not permitted. Creating a free organisation does not require a paid plan.
+The project needs a clean public identity and a path to open source without a paid GitHub plan. A GitHub organisation must be owned by a Personal Account. Creating a free organisation does not require a paid plan.
 
-The maintainer wants Superagent to operate under the human account rather than a separate machine account, and to store the token in macOS Keychain.
+The project is built by one maintainer working interactively with a coding assistant. It does not use an autonomous coding agent, a bot account, or a machine account.
 
 ## Decision
 
-Use a **free GitHub organisation** and a **single human account**:
+Use a **free GitHub organisation** with a **single human account**:
 
 - **Human owner:** `atpl-training` owns the free organisation `terrassay`; reviews, merges, and handles billing.
 - **Organisation:** `terrassay` on the **Free** plan; the project’s public identity.
 - **Repository:** `terrassay/terrassay`, public from bootstrap, with branch protection, CODEOWNERS, required CI, secret scanning, and Dependabot.
-- **Superagent:** runs as `atpl-training` using a fine-grained PAT scoped only to `terrassay/terrassay`. The token is stored in macOS Keychain and injected only into the `gh` process by the `gh-terrassay` wrapper.
-- **No machine account, collaborator invite, or paid plan** is used.
-- Because the PR author and reviewer are the same account, branch protection requires a PR and CI, allows owner admin bypass, and the agent token has no Administration permission. The owner merges.
+- **No machine account, bot account, or paid plan** is used.
+- Branch protection requires a pull request and CI. Because there is one human, no separate approval is required; the maintainer reviews and merges.
 
 ## Consequences
 
 **Positive**
 
-- $0 on GitHub for the organisation, public repo, and token.
+- $0 on GitHub for the organisation and public repo.
 - Clean public identity with a separate org namespace.
-- No second account to create or maintain.
-- Token is scoped to one repo and stored encrypted in Keychain.
-- Human review/merge remains with the owner.
+- No second account, token, or automation identity to maintain.
+- Human review and merge remain with the maintainer.
 
 **Negative**
 
-- Commits and PRs are authored by `atpl-training`; there is no separate bot identity.
-- A same-account PR cannot be approved by that account; the owner merges via admin bypass.
-- The agent can see the account’s notifications; isolation is weaker than a machine account.
-- A compromised agent acts as the human within token scope.
+- No autonomous agent; scoped work must be done interactively with the assistant.
+- One owner is a bus-factor risk.
+- A public repo means the code and history are visible; secrets and data hygiene are mandatory.
 
 **Mitigations**
 
-- Scope the PAT to one repo and Write permissions; no admin, secrets, or org access.
-- Keep `main` protected; the token cannot bypass.
-- Run Superagent on an isolated OS user/VM where possible.
-- Rotate the token every 90 days; delete it on compromise.
-- Disclose AI-assisted PRs.
+- Keep secrets out of the repo; use environment-scoped deployment secrets only if needed.
+- Protect `main`; no force pushes or deletions.
+- Document recovery and add a trusted co-owner only when a real person is available.
+- Use the assistant for scoped work, with human review and tests.
 
 ## Alternatives considered
 
 | Alternative | Why rejected |
 |---|---|
 | Create a second free human account | Violates GitHub’s one-free-account rule; risk of account closure |
-| Separate free machine account | Stronger isolation, but the maintainer wants the agent on the human account and the collaborator flow was blocked |
+| Add a machine/bot account | More moving parts and a second identity; not needed for an interactive build |
 | Paid GitHub Pro human account | Not needed for a free public org |
 | Use a personal repo without an org | Works, but loses the project namespace and future team structure |
 | Self-hosted Git | Loses network effects and integrations; can be a mirror later |
 
 ## Review trigger
 
-Revisit if audit separation becomes necessary, the project needs private-repo protections that require Team, or the project joins a foundation.
+Revisit if the project adds automated CI agents, needs private-repo protections that require Team, joins a foundation, or needs an organisation-level legal entity.

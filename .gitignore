@@ -1,6 +1,4 @@
-# Local tooling and state (never commit)
-.superagent/
-.dsh/
+# Local state (never commit)
 .env
 .env.*
 *.token
@@ -24,5 +22,3 @@ data/
 tmp/
 .venv/
 
-# pnpm store created by local tooling
-.pnpm-store/
