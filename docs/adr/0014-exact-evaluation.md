@@ -1,6 +1,6 @@
 # ADR-0014: Evaluate Expo Exact for the client runtime
 
-- **Status:** Rejected for the core workspace; proposed for a future native companion
+- **Status:** Full rewrite rejected; hybrid spike proposed
 - **Date:** 2026-11-09
 - **Deciders:** Maintainer
 - **Related:** [ARCHITECTURE](../ARCHITECTURE.md), [ADR-0001](0001-reuse-geolibre.md)
@@ -23,7 +23,7 @@ day give Terrassay a native macOS/iOS field client from one codebase.
 
 ## Decision
 
-**Do not adopt Exact for the core Terrassay workspace now.**
+**Do not rewrite the core Terrassay workspace in Exact without a hybrid spike.**
 
 Keep the React + Vite shell and the GeoLibre iframe. Revisit Exact only for a
 **separate native companion** after the self-hosted beta, and only if there is real
@@ -79,6 +79,62 @@ A future evaluation must prove, in a time-boxed spike:
 - No native desktop/mobile client from Exact in the near term.
 - A future native client may duplicate some UI and map logic.
 - The team forgoes Exact's performance and agent-native testing for now.
+
+## Addendum — hybrid is possible (2026-11-09)
+
+Exact's Contract supports `iframe` with `message=` and `postMessage(text, target)` on
+web and Apple hosts. GeoLibre can therefore run as a **web-island map** inside an
+Exact shell:
+
+```text
+Exact Contract shell
+  ├── native project/issues/assistant UI
+  └── iframe id="map" src="https://app.example/map-bridge" message=onMapMessage
+        ↕ string JSON protocol (postMessage / message=)
+      map-bridge page
+        └── GeoLibre embed (MapLibre / Cesium)
+```
+
+### Hybrid A — Exact shell + GeoLibre iframe (one app, web map island)
+
+This keeps the map stack and the Rust API. It requires:
+
+- a rewritten shell in Contract;
+- a small bridge page that translates Exact's string messages to the GeoLibre
+  embed protocol and posts events back;
+- auth/cookies, CORS, CSP, and signed-URL handling across two origins;
+- testing GeoLibre inside WKWebView on macOS/iOS, including gestures, COG/PMTiles
+  range requests, and performance;
+- accepting that the map is not native and offline map behavior is limited.
+
+It is a real hybrid, but it is **not** a fully native app: the core surface remains
+a web view, and Exact's main advantage is reduced to the surrounding chrome.
+
+### Hybrid B — Exact native field client + existing React web workspace
+
+Two clients, one API:
+
+- React/Vite + GeoLibre remains the desktop analysis workspace;
+- Exact becomes a native macOS/iOS field client for offline issues, GPS, camera,
+  site photos, and a simpler native map (MapKit or another module);
+- both call the same Rust API and share domain types.
+
+This has the lowest risk and the clearest product reason. It does not require
+rewriting the web shell, and it does not put GeoLibre inside an Exact iframe.
+
+### Recommendation
+
+Run a **time-boxed hybrid spike** before any rewrite:
+
+1. `exact new`; render an `iframe` with a minimal GeoLibre map.
+2. Implement `setView`, `addLayer`, `highlight`, and `message=` events over strings.
+3. Run it on web, macOS, and iOS.
+4. Measure map interaction, load time, auth, memory, and offline behavior.
+5. Decide: Hybrid A if the web-island map is acceptable; Hybrid B if native field
+   work is the real goal; stay React if neither passes.
+
+Do not start a full Contract rewrite before this spike. The map is the product; the
+iframe bridge is the riskiest unknown.
 
 ## Alternatives considered
 
