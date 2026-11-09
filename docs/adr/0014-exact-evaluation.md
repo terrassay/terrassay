@@ -1,6 +1,6 @@
 # ADR-0014: Evaluate Expo Exact for the client runtime
 
-- **Status:** Full rewrite rejected; hybrid spike proposed
+- **Status:** Parked — stay on React + GeoLibre
 - **Date:** 2026-11-09
 - **Deciders:** Maintainer
 - **Related:** [ARCHITECTURE](../ARCHITECTURE.md), [ADR-0001](0001-reuse-geolibre.md)
@@ -23,7 +23,7 @@ day give Terrassay a native macOS/iOS field client from one codebase.
 
 ## Decision
 
-**Do not rewrite the core Terrassay workspace in Exact without a hybrid spike.**
+**Park Exact. Do not adopt it or run a hybrid spike now.** The core workspace stays React + Vite + GeoLibre; the Rust API and PostGIS remain unchanged.
 
 Keep the React + Vite shell and the GeoLibre iframe. Revisit Exact only for a
 **separate native companion** after the self-hosted beta, and only if there is real
@@ -148,5 +148,6 @@ iframe bridge is the riskiest unknown.
 
 ## Review trigger
 
-Revisit when Exact reaches 1.0 or a stable API, when an iframe/native-map bridge is
-demonstrated, or when a design partner asks for an offline native field client.
+Revisit only when a design partner asks for an offline native field client, or Exact
+reaches 1.0 with a stable API and a demonstrated map path. Do not reopen it for the
+web workspace.

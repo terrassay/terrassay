@@ -16,7 +16,7 @@ Each ADR captures a decision that constrains the build. Statuses: **Accepted**, 
 | [0011](0011-legal-gate.md) | Two legal gates: synthetic public release and commercial use | Accepted |
 | [0012](0012-3d-strategy.md) | 3D massing in the demo; no BIM geometry from Revizto | Accepted |
 | [0013](0013-auth-tenancy.md) | Demo-first auth and single-tenant tenancy model | Proposed |
-| [0014](0014-exact-evaluation.md) | Expo Exact evaluation: full rewrite rejected; hybrid spike proposed | Spike proposed |
+| [0014](0014-exact-evaluation.md) | Expo Exact evaluation: parked; stay on React + GeoLibre | Parked |
 
 ## Conventions
 
